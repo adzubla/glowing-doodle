@@ -15,7 +15,6 @@
  */
 package com.example.atm.netty.server;
 
-import com.example.atm.netty.codec.header.HeaderData;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -32,23 +31,19 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelActive(final ChannelHandlerContext ctx) {
-        HeaderData headerData = new HeaderData("000000");
-        ctx.channel().attr(HeaderData.HEADER_DATA_ATTRIBUTE_KEY).set(headerData);
-
         ctx.writeAndFlush("Welcome to secure chat service!");
         channels.add(ctx.channel());
     }
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-        HeaderData headerData = ctx.channel().attr(HeaderData.HEADER_DATA_ATTRIBUTE_KEY).get();
 
         // Send the received message to all channels but the current one.
         for (Channel c : channels) {
             if (c != ctx.channel()) {
-                c.writeAndFlush("[" + headerData.getId() + "|" + ctx.channel().remoteAddress() + "] " + msg);
+                c.writeAndFlush("[" + ctx.channel().remoteAddress() + "] " + msg);
             } else {
-                c.writeAndFlush("[" + headerData.getId() + "|me] " + msg);
+                c.writeAndFlush("[me] " + msg);
             }
         }
 
