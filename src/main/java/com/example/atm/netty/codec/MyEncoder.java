@@ -10,10 +10,9 @@ public class MyEncoder extends MessageToByteEncoder<ByteBuf> {
     @Override
     protected void encode(ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) {
 
-        int length = msg.readableBytes() + 1;
+        int length = msg.readableBytes();
         ByteBuf result = Unpooled.buffer(length);
 
-        length--;
         result.writeByte('*');
 
         while (length-- > 0) {

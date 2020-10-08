@@ -12,7 +12,7 @@ public class MyDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
 
-        int length = in.readableBytes() - 1;
+        int length = in.readableBytes();
         ByteBuf result = Unpooled.buffer(length);
 
         length--;
