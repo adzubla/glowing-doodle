@@ -1,4 +1,4 @@
-package com.example.atm.netty.codec.length;
+package com.example.atm.netty.codec;
 
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 

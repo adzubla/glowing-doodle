@@ -15,10 +15,10 @@
  */
 package com.example.atm.netty.server;
 
-import com.example.atm.netty.codec.crypto.CryptoDecoder;
-import com.example.atm.netty.codec.crypto.CryptoEncoder;
-import com.example.atm.netty.codec.length.LengthFrameDecoder;
-import com.example.atm.netty.codec.length.LengthPrepender;
+import com.example.atm.netty.codec.LengthFrameDecoder;
+import com.example.atm.netty.codec.LengthPrepender;
+import com.example.atm.netty.codec.MyDecoder;
+import com.example.atm.netty.codec.MyEncoder;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -35,11 +35,11 @@ public class ChatServerInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = ch.pipeline();
 
         pipeline.addLast(new LengthFrameDecoder());
-        pipeline.addLast(new CryptoDecoder());
+        //pipeline.addLast(new MyDecoder());
         pipeline.addLast(new StringDecoder());
 
         pipeline.addLast(new LengthPrepender());
-        pipeline.addLast(new CryptoEncoder());
+        //pipeline.addLast(new MyEncoder());
         pipeline.addLast(new StringEncoder());
 
         pipeline.addLast(new ChatServerHandler());
