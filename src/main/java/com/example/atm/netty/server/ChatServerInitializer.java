@@ -42,7 +42,7 @@ public class ChatServerInitializer extends ChannelInitializer<SocketChannel> {
 
         pipeline.addLast(new LengthFrameDecoder());
         pipeline.addLast(new MyDecoder(true));
-        pipeline.addLast(new MyDecoder(false));
+        pipeline.addLast(new MyDecoder(true));
         pipeline.addLast(new MyDecoder(true));
         pipeline.addLast(new StringDecoder());
 
