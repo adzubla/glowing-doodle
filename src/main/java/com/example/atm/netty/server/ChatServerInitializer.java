@@ -41,9 +41,9 @@ public class ChatServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new StringDecoder());
 
         pipeline.addLast(new LengthPrepender());
-        pipeline.addLast(new MyEncoder());
-        pipeline.addLast(new MyEncoder());
-        pipeline.addLast(new MyEncoder());
+        pipeline.addLast(new MyEncoder('$'));
+        pipeline.addLast(new MyEncoder('%'));
+        pipeline.addLast(new MyEncoder('&'));
         pipeline.addLast(new StringEncoder());
 
         pipeline.addLast(new ChatServerHandler());

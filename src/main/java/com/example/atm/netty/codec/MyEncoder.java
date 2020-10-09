@@ -7,20 +7,30 @@ import io.netty.handler.codec.MessageToByteEncoder;
 
 public class MyEncoder extends MessageToByteEncoder<ByteBuf> {
 
+    private Character theChar;
+
+    public MyEncoder(Character theChar) {
+        this.theChar = theChar;
+    }
+
     @Override
     protected void encode(ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) {
 
-        int length = msg.readableBytes();
-        ByteBuf result = Unpooled.buffer(length);
+        if (theChar == null) {
+            ctx.writeAndFlush("* error *");
+        } else {
+            int length = msg.readableBytes();
+            ByteBuf result = Unpooled.buffer(length);
 
-        result.writeByte('*');
+            result.writeByte(theChar);
 
-        while (length-- > 0) {
-            char c = (char) msg.readByte();
-            result.writeByte(c);
+            while (length-- > 0) {
+                char c = (char) msg.readByte();
+                result.writeByte(c);
+            }
+
+            out.writeBytes(result);
         }
-
-        out.writeBytes(result);
     }
 
 }
