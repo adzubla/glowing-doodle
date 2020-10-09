@@ -7,7 +7,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 
 public class MyEncoder extends MessageToByteEncoder<ByteBuf> {
 
-    private Character theChar;
+    private final Character theChar;
 
     public MyEncoder(Character theChar) {
         this.theChar = theChar;
@@ -16,21 +16,17 @@ public class MyEncoder extends MessageToByteEncoder<ByteBuf> {
     @Override
     protected void encode(ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) {
 
-        if (theChar == null) {
-            ctx.writeAndFlush("* error *");
-        } else {
-            int length = msg.readableBytes();
-            ByteBuf result = Unpooled.buffer(length);
+        int length = msg.readableBytes();
+        ByteBuf result = Unpooled.buffer(length);
 
-            result.writeByte(theChar);
+        result.writeByte(theChar);
 
-            while (length-- > 0) {
-                char c = (char) msg.readByte();
-                result.writeByte(c);
-            }
-
-            out.writeBytes(result);
+        while (length-- > 0) {
+            char c = (char) msg.readByte();
+            result.writeByte(c);
         }
+
+        out.writeBytes(result);
     }
 
 }

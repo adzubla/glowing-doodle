@@ -31,7 +31,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelActive(final ChannelHandlerContext ctx) {
-        ctx.writeAndFlush("Welcome to secure chat service!");
+        //ctx.writeAndFlush("Welcome to secure chat service!");
         channels.add(ctx.channel());
     }
 
